@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 
+def is_listing_active(url):
+    soup = create_soup_object(url)
+    return is_listing_active_soup(soup)
+
 def fetch(url):
     headers = {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
@@ -19,7 +23,7 @@ def create_soup_object(url):
     return soup
 
 
-def get_listing_status(soup):
+def is_listing_active_soup(soup):
     parent_content = soup.find(id = "content")
     rented_status = parent_content.find_all("div", class_= "status closed status_sold")
     contract_status = parent_content.find_all("div", class_= "status pending status_pending")
